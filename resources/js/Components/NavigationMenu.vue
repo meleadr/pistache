@@ -22,7 +22,7 @@
                         >
                         <NavLink
                             :href="route('dashboard')"
-                            :active="route().current('dashboard')"
+                            :active="route().current('about')"
                             >A propos</NavLink
                         >
                         <NavLink
