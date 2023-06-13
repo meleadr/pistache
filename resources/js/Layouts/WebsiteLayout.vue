@@ -16,7 +16,7 @@ import NavigationMenu from "@/Components/NavigationMenu.vue";
 
             <!-- Page Content -->
             <main
-                class="min-h-screen flex flex-col sm:justify-center items-center sm:pt-0 bg-gray-100"
+                class="flex flex-col sm:justify-center items-center sm:pt-0 bg-gray-100"
             >
                 <div
                     class="w-full bg-white shadow-md overflow-hidden sm:rounded-lg"
