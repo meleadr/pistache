@@ -21,12 +21,12 @@
                             >Menu</NavLink
                         >
                         <NavLink
-                            :href="route('dashboard')"
+                            :href="route('about')"
                             :active="route().current('about')"
                             >A propos</NavLink
                         >
                         <NavLink
-                            :href="route('dashboard')"
+                            :href="route('contact')"
                             :active="route().current('contact')"
                             >Contact</NavLink
                         >
