@@ -29,7 +29,7 @@ const buildingText =
 <template>
     <Head title="À propos de nous" />
 
-    <WebsiteLayout class="m-10">
+    <WebsiteLayout class="mr-10 ml-10 mb-10">
         <template #header>
             <h2 class="text-4xl text-center mb-10">À propos de nous</h2>
         </template>
