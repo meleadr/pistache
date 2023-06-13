@@ -30,8 +30,18 @@ const inspirationImages = ref([
             class="hero bg-center bg-cover h-screen flex items-center justify-center"
             :style="{ 'background-image': `url(${heroImage})` }"
         >
-            <div class="hero-content text-white text-center">
-                <h1 class="text-5xl">{{ heroTitle }}</h1>
+            <div
+                class="hero-content text-white text-center flex flex-col items-center"
+            >
+                <h1 class="text-5xl mb-8">{{ heroTitle }}</h1>
+
+                <!-- Call to Action button -->
+                <NavLink
+                    :href="route('dashboard')"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                    Découvrez notre menu
+                </NavLink>
             </div>
         </section>
 
@@ -55,7 +65,7 @@ const inspirationImages = ref([
         <!-- Section Call To Action -->
         <section class="cta py-20 text-center">
             <NavLink
-                :href="route('dashboard')"
+                :href="route('contact')"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
                 Contactez-nous
