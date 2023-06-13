@@ -6,7 +6,7 @@ import NavLink from "@/Components/NavLink.vue";
 
 // Hero data
 const heroImage = ref("/img/hero.jpg");
-const heroTitle = ref("Bienvenue sur notre site");
+const heroTitle = ref("Bienvenue chez Pistache");
 
 // About data
 const aboutText = ref(
