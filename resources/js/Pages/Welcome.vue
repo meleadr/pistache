@@ -2,24 +2,27 @@
 import { ref } from "vue";
 import { Head } from "@inertiajs/vue3";
 import WebsiteLayout from "@/Layouts/WebsiteLayout.vue";
+import NavLink from "@/Components/NavLink.vue";
 
 // Hero data
 const heroImage = ref("/img/hero.jpg");
 const heroTitle = ref("Bienvenue sur notre site");
 
 // About data
-const aboutText = ref("Ceci est un texte à propos de nous.");
+const aboutText = ref(
+    "Bienvenue chez Pistache, l'oasis gastronomique où la France embrasse la Méditerranée. Chez nous, chaque plat est une célébration des saveurs, alliant la sophistication de la cuisine française à la chaleur de la Méditerranée. Nous mettons l'accent sur des ingrédients de qualité supérieure, des techniques culinaires raffinées et une véritable passion pour la gastronomie. Dès l'instant où vous franchissez notre porte, vous êtes invité à vivre une expérience culinaire inoubliable. Découvrez l'ambiance chaleureuse, savourez des plats exceptionnels et partagez notre amour pour la cuisine franco-méditerranéenne chez Pistache."
+);
 
 // Inspiration data
 const inspirationImages = ref([
-    "/path/to/image1.jpg",
-    "/path/to/image2.jpg",
-    "/path/to/image3.jpg",
+    "/img/repas1.webp",
+    "/img/repas3.jpg",
+    "/img/repas2.jpg",
 ]);
 </script>
 
 <template>
-    <Head title="Welcome" />
+    <Head title="Accueil" />
 
     <WebsiteLayout>
         <!-- Section Banner / Hero -->
@@ -51,12 +54,12 @@ const inspirationImages = ref([
 
         <!-- Section Call To Action -->
         <section class="cta py-20 text-center">
-            <router-link
-                to="/contact"
+            <NavLink
+                :href="route('dashboard')"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
                 Contactez-nous
-            </router-link>
+            </NavLink>
         </section>
     </WebsiteLayout>
 </template>
