@@ -29,13 +29,17 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/contact', function () {
-	return Inertia::render('Contact');
-})->name('contact');
+Route::get('/menu', function () {
+	return Inertia::render('Menu');
+})->name('menu');
 
 Route::get('/about', function () {
 	return Inertia::render('About');
 })->name('about');
+
+Route::get('/contact', function () {
+	return Inertia::render('Contact');
+})->name('contact');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

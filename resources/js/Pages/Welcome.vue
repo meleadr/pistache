@@ -37,7 +37,7 @@ const inspirationImages = ref([
 
                 <!-- Call to Action button -->
                 <NavLink
-                    :href="route('dashboard')"
+                    :href="route('menu')"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >
                     Découvrez notre menu
