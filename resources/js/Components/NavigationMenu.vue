@@ -27,7 +27,7 @@
                         >
                         <NavLink
                             :href="route('dashboard')"
-                            :active="route().current('dashboard')"
+                            :active="route().current('contact')"
                             >Contact</NavLink
                         >
                     </div>
