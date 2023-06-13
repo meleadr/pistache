@@ -14,7 +14,7 @@ const contactInformation = {
 <template>
     <Head title="Contactez-nous" />
 
-    <WebsiteLayout>
+    <WebsiteLayout class="m-10">
         <template #header>
             <h2 class="text-4xl text-center mb-10">Nous Contacter</h2>
         </template>
