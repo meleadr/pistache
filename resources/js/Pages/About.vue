@@ -18,22 +18,24 @@ const galleryImages = [
 const teamMembers = [
     { name: "Jean Dupont", role: "Chef", image: "/img/chef.jpg" },
     { name: "Marie Leblanc", role: "Sommelière", image: "/img/sommelier.jpg" },
-    // Add more team members as needed
 ];
 
 // Building data
-const buildingImage = "/img/building.jpg";
+const buildingImage = "/img/edifice.webp";
 const buildingText =
-    "Notre restaurant est situé dans un bel édifice historique en plein cœur de Paris. L'intérieur est décoré dans un style qui allie le charme traditionnel français et une touche de modernité.";
+    "Notre restaurant est situé dans un bel édifice historique en plein cœur de Paris. L'intérieur est décoré dans un style qui allie le charme traditionnel français et luxe.";
 </script>
 
 <template>
     <Head title="À propos de nous" />
 
-    <WebsiteLayout>
+    <WebsiteLayout class="m-10">
+        <template #header>
+            <h2 class="text-4xl text-center mb-10">À propos de nous</h2>
+        </template>
+
         <!-- About Section -->
         <section class="about py-20">
-            <h2 class="text-4xl text-center mb-10">À propos de nous</h2>
             <p class="text-center">{{ aboutText }}</p>
         </section>
 
@@ -42,7 +44,7 @@ const buildingText =
             <div v-for="(image, index) in galleryImages" :key="index">
                 <img
                     :src="image"
-                    :alt="`Gallery image ${index + 1}`"
+                    :alt="`Gallerie image plat ${index + 1}`"
                     class="w-full"
                 />
             </div>
@@ -55,7 +57,7 @@ const buildingText =
                 <div v-for="member in teamMembers" :key="member.name">
                     <img
                         :src="member.image"
-                        :alt="`Image of ${member.name}`"
+                        :alt="`Image de ${member.name}`"
                         class="w-full"
                     />
                     <h3 class="text-xl">{{ member.name }}</h3>
@@ -72,7 +74,7 @@ const buildingText =
             >
                 <img
                     :src="buildingImage"
-                    alt="Image of our building"
+                    alt="Image de notre édifice"
                     class="w-full sm:w-1/2"
                 />
                 <p class="sm:w-1/2">{{ buildingText }}</p>
