@@ -41,11 +41,15 @@ const buildingText =
 
         <!-- Gallery Section -->
         <section class="gallery grid grid-cols-2 gap-4 py-20 sm:grid-cols-4">
-            <div v-for="(image, index) in galleryImages" :key="index">
+            <div
+                v-for="(image, index) in galleryImages"
+                :key="index"
+                class="aspect-w-1 aspect-h-1"
+            >
                 <img
                     :src="image"
                     :alt="`Gallerie image plat ${index + 1}`"
-                    class="w-full"
+                    class="h-full w-full object-cover"
                 />
             </div>
         </section>
