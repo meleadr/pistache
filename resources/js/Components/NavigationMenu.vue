@@ -8,7 +8,7 @@
                     <div class="flex shrink-0 items-center">
                         <Link href="/">
                             <ApplicationLogo
-                                class="block h-10 w-auto fill-current text-gray-800"
+                                class="h-15 block w-auto fill-current text-gray-800"
                             />
                         </Link>
                     </div>
