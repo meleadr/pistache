@@ -10,6 +10,10 @@ const props = defineProps({
     active: {
         type: Boolean,
     },
+    isStyled: {
+        type: Boolean,
+        default: true,
+    },
 });
 
 const classes = computed(() => {
