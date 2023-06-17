@@ -16,6 +16,11 @@
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <NavLink
+                            :href="route('accueil')"
+                            :active="route().current('accueil')"
+                            >Accueil</NavLink
+                        >
+                        <NavLink
                             :href="route('menu')"
                             :active="route().current('menu')"
                             >Menus</NavLink
