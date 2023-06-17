@@ -4,6 +4,7 @@ import { Head } from "@inertiajs/vue3";
 import WebsiteLayout from "@/Layouts/WebsiteLayout.vue";
 import NavLink from "@/Components/NavLink.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 // Hero data
 const heroImage = ref("/img/hero.jpg");
@@ -46,15 +47,13 @@ const inspirationImages = ref([
         </section>
 
         <!-- Section À propos -->
-        <section class="about py-20">
+        <section class="about mx-auto w-8/12 py-10">
             <h2 class="mb-10 text-center text-4xl">Notre histoire</h2>
             <p class="text-center">{{ aboutText }}</p>
         </section>
 
         <!-- Section Photos d'inspirations -->
-        <section
-            class="inspiration grid grid-cols-1 gap-4 py-20 lg:grid-cols-3"
-        >
+        <section class="inspiration grid grid-cols-1 gap-4 py-5 lg:grid-cols-3">
             <div class="aspect-w-2 aspect-h-1 col-span-1 lg:col-span-2">
                 <img
                     :src="inspirationImages[0]"
@@ -81,12 +80,16 @@ const inspirationImages = ref([
         </section>
 
         <!-- Section Call To Action -->
-        <section class="cta py-20 text-center">
-            <PrimaryButton>
+        <section class="cta bg-amber-500 py-20 text-center text-white">
+            <h2 class="mb-6 text-4xl">Prêt à passer votre commande?</h2>
+            <p class="mb-8 text-lg">
+                Contactez-nous et nous serons ravis de vous aider.
+            </p>
+            <SecondaryButton>
                 <NavLink :href="route('contact')" :isStyled="false">
                     Contactez-nous
                 </NavLink>
-            </PrimaryButton>
+            </SecondaryButton>
         </section>
     </WebsiteLayout>
 </template>
