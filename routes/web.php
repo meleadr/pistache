@@ -29,6 +29,31 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/dashboard/menu', function () {
+	return Inertia::render('Menu/AllMenu');
+})->middleware(['auth', 'verified'])->name('menu.index');
+
+Route::get('/dashboard/menu/add', function () {
+	return Inertia::render('Menu/MenuForm');
+})->middleware(['auth', 'verified'])->name('menu.add');
+
+Route::get('/dashboard/menu/edit/{id}', function () {
+	return Inertia::render('Menu/MenuForm');
+})->middleware(['auth', 'verified'])->name('menu.edit');
+
+// category
+Route::get('/dashboard/categorie', function () {
+	return Inertia::render('Categorie/AllCategorie');
+})->middleware(['auth', 'verified'])->name('categorie.index');
+
+Route::get('/dashboard/categorie/add', function () {
+	return Inertia::render('Categorie/CategorieForm');
+})->middleware(['auth', 'verified'])->name('categorie.add');
+
+Route::get('/dashboard/categorie/edit/{id}', function () {
+	return Inertia::render('Categorie/CategorieForm');
+})->middleware(['auth', 'verified'])->name('categorie.edit');
+
 Route::get('/menu', function () {
 	return Inertia::render('Menu');
 })->name('menu');
