@@ -52,13 +52,31 @@ const inspirationImages = ref([
         </section>
 
         <!-- Section Photos d'inspirations -->
-        <section class="inspiration grid grid-cols-3 gap-4 py-20">
-            <div v-for="(image, index) in inspirationImages" :key="index">
+        <section
+            class="inspiration grid grid-cols-1 gap-4 py-20 lg:grid-cols-3"
+        >
+            <div class="aspect-w-2 aspect-h-1 col-span-1 lg:col-span-2">
                 <img
-                    :src="image"
-                    :alt="`Inspiration image ${index + 1}`"
-                    class="w-full"
+                    :src="inspirationImages[0]"
+                    :alt="`Inspiration image 1`"
+                    class="h-full w-full object-cover"
                 />
+            </div>
+            <div class="col-span-1 gap-4 lg:col-span-1 lg:grid lg:grid-rows-2">
+                <div class="aspect-w-1 aspect-h-1">
+                    <img
+                        :src="inspirationImages[1]"
+                        :alt="`Inspiration image 2`"
+                        class="h-full w-full object-cover"
+                    />
+                </div>
+                <div class="aspect-w-1 aspect-h-1">
+                    <img
+                        :src="inspirationImages[2]"
+                        :alt="`Inspiration image 3`"
+                        class="h-full w-full object-cover"
+                    />
+                </div>
             </div>
         </section>
 
