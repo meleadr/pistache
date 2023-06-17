@@ -11,7 +11,7 @@ const galleryImages = [
     "/img/repas1.webp",
     "/img/repas2.jpg",
     "/img/repas3.jpg",
-    "/img/repas4.jpg",
+    "/img/repas4.webp",
 ];
 
 // Team data
@@ -29,9 +29,9 @@ const buildingText =
 <template>
     <Head title="À propos de nous" />
 
-    <WebsiteLayout class="mr-10 ml-10 mb-10">
+    <WebsiteLayout class="mb-10 ml-10 mr-10">
         <template #header>
-            <h2 class="text-4xl text-center mb-10">À propos de nous</h2>
+            <h2 class="mb-10 text-center text-4xl">À propos de nous</h2>
         </template>
 
         <!-- About Section -->
@@ -40,7 +40,7 @@ const buildingText =
         </section>
 
         <!-- Gallery Section -->
-        <section class="gallery py-20 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <section class="gallery grid grid-cols-2 gap-4 py-20 sm:grid-cols-4">
             <div v-for="(image, index) in galleryImages" :key="index">
                 <img
                     :src="image"
@@ -52,8 +52,8 @@ const buildingText =
 
         <!-- Team Section -->
         <section class="team py-20">
-            <h2 class="text-4xl text-center mb-10">Notre équipe</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center">
+            <h2 class="mb-10 text-center text-4xl">Notre équipe</h2>
+            <div class="grid grid-cols-1 gap-6 text-center sm:grid-cols-2">
                 <div v-for="member in teamMembers" :key="member.name">
                     <img
                         :src="member.image"
@@ -68,9 +68,9 @@ const buildingText =
 
         <!-- Building Section -->
         <section class="building py-20">
-            <h2 class="text-4xl text-center mb-10">Notre édifice</h2>
+            <h2 class="mb-10 text-center text-4xl">Notre édifice</h2>
             <div
-                class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-6 text-center"
+                class="flex flex-col items-center space-y-6 text-center sm:flex-row sm:space-x-6 sm:space-y-0"
             >
                 <img
                     :src="buildingImage"
