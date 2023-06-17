@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Head } from "@inertiajs/vue3";
 import WebsiteLayout from "@/Layouts/WebsiteLayout.vue";
 import NavLink from "@/Components/NavLink.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 // Hero data
 const heroImage = ref("/img/hero.jpg");
@@ -27,32 +28,31 @@ const inspirationImages = ref([
     <WebsiteLayout>
         <!-- Section Banner / Hero -->
         <section
-            class="hero bg-center bg-cover h-screen flex items-center justify-center"
+            class="hero flex h-screen items-center justify-center bg-cover bg-center"
             :style="{ 'background-image': `url(${heroImage})` }"
         >
             <div
-                class="hero-content text-white text-center flex flex-col items-center"
+                class="hero-content flex flex-col items-center text-center text-white"
             >
-                <h1 class="text-5xl mb-8">{{ heroTitle }}</h1>
+                <h1 class="mb-8 text-5xl">{{ heroTitle }}</h1>
 
                 <!-- Call to Action button -->
-                <NavLink
-                    :href="route('menu')"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    Découvrez notre menu
-                </NavLink>
+                <PrimaryButton>
+                    <NavLink :href="route('menu')" :isStyled="false">
+                        Découvrez notre menu
+                    </NavLink>
+                </PrimaryButton>
             </div>
         </section>
 
         <!-- Section À propos -->
         <section class="about py-20">
-            <h2 class="text-4xl text-center mb-10">Notre histoire</h2>
+            <h2 class="mb-10 text-center text-4xl">Notre histoire</h2>
             <p class="text-center">{{ aboutText }}</p>
         </section>
 
         <!-- Section Photos d'inspirations -->
-        <section class="inspiration py-20 grid grid-cols-3 gap-4">
+        <section class="inspiration grid grid-cols-3 gap-4 py-20">
             <div v-for="(image, index) in inspirationImages" :key="index">
                 <img
                     :src="image"
@@ -64,12 +64,11 @@ const inspirationImages = ref([
 
         <!-- Section Call To Action -->
         <section class="cta py-20 text-center">
-            <NavLink
-                :href="route('contact')"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-                Contactez-nous
-            </NavLink>
+            <PrimaryButton>
+                <NavLink :href="route('contact')" :isStyled="false">
+                    Contactez-nous
+                </NavLink>
+            </PrimaryButton>
         </section>
     </WebsiteLayout>
 </template>
