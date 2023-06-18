@@ -1,47 +1,50 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Head } from "@inertiajs/vue3";
 import WebsiteLayout from "@/Layouts/WebsiteLayout.vue";
+import MenuItem from "@/Components/MenuItem.vue";
 
-// Menu data (replace with API call when ready)
-const menuItems = ref([
-    {
-        id: 1,
-        title: "Salade Niçoise",
-        content: "Salade, tomates, olives, œuf...",
-        categories: ["Salades", "Végétarien"],
-    },
-    {
-        id: 2,
-        title: "Coq au Vin",
-        content: "Poulet, vin rouge, champignons...",
-        categories: ["Plats principaux"],
-    },
-    {
-        id: 3,
-        title: "Moules Marinières",
-        content: "Moules, ail, vin blanc...",
-        categories: ["Fruits de mer"],
-    },
-    // Add more items as needed
-]);
+// Menu items
+const menuItems = ref([]);
 
 // Categories (used for filtering)
-const categories = ref([
-    "Tous",
-    "Salades",
-    "Plats principaux",
-    "Végétarien",
-    "Fruits de mer",
-]);
+const categories = ref([]);
+
+// MenuHasCategories (used for filtering)
+const menuHasCategories = ref([]);
 
 // Currently selected category for filtering
-const selectedCategory = ref("Tous");
+const selectedCategory = ref(0);
 
 // Function to handle category selection for filtering
 const selectCategory = (category) => {
     selectedCategory.value = category;
 };
+
+// Fetch menu items from API
+const fetchMenu = async () => {
+    const response = await axios.get("/api/menus");
+    menuItems.value = response.data;
+};
+
+// Fetch categories from API
+const fetchCategories = async () => {
+    const response = await axios.get("/api/categories");
+    categories.value = [...response.data];
+};
+
+// Fetch menuHascategories from API
+const fetchMenuHasCategory = async () => {
+    const response = await axios.get("/api/menuHasCategory");
+    menuHasCategories.value = [...response.data];
+};
+
+// Fetch menu items and categories on component mount
+onMounted(() => {
+    fetchMenu();
+    fetchCategories();
+    fetchMenuHasCategory();
+});
 </script>
 
 <template>
@@ -57,30 +60,27 @@ const selectCategory = (category) => {
             <div class="mb-10 flex flex-wrap justify-center space-x-2">
                 <button
                     v-for="category in categories"
-                    :key="category"
-                    @click="selectCategory(category)"
+                    :key="category.id"
+                    @click="selectCategory(category.id)"
                     class="rounded bg-amber-500 px-4 py-2 font-bold text-white hover:bg-amber-700"
-                    :class="{ 'bg-amber-700': selectedCategory === category }"
+                    :class="{
+                        'bg-amber-700': selectedCategory === category.id,
+                    }"
                 >
-                    {{ category }}
+                    {{ category.name }}
                 </button>
             </div>
 
             <!-- Menu Items -->
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <div
-                    v-for="item in menuItems"
-                    :key="item.id"
-                    v-show="
-                        selectedCategory === 'Tous' ||
-                        item.categories.includes(selectedCategory)
-                    "
-                >
-                    <MenuItems :id="item.id" :editable="true" />
+                <div v-for="item in menuItems" :key="item.id">
+                    <MenuItem
+                        :id="item.id"
+                        :title="item.title"
+                        :content="item.content"
+                    />
                 </div>
             </div>
         </section>
     </WebsiteLayout>
 </template>
-
-<style scoped></style>
