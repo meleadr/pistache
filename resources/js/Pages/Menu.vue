@@ -59,6 +59,16 @@ const filteredMenuItems = computed(() => {
 const fetchMenu = async () => {
     const response = await axios.get("/api/menusPublished");
     menuItems.value = response.data;
+    menuItems.value.forEach((item) => {
+        item.created_at = new Date(item.created_at).toLocaleDateString(
+            "fr-FR",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            }
+        );
+    });
 };
 
 // Fetch categories from API

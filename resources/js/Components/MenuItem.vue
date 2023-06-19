@@ -40,8 +40,8 @@ const props = defineProps({
 <template>
     <div class="rounded border border-gray-200 p-6 shadow-sm" v-if="props.id">
         <h3 class="mb-2 text-xl">{{ props.title }}</h3>
-        <p>{{ props.content }}</p>
-        <div class="mt-2">
+        <p v-show="!props.editable">{{ props.content }}</p>
+        <div v-show="!props.editable" class="mt-2">
             <span
                 v-for="(category, index) in props.categories"
                 :key="index"
@@ -50,8 +50,12 @@ const props = defineProps({
                 {{ category.name }}
             </span>
         </div>
+        <!-- Date de création-->
+        <p v-show="props.editable" class="text-md mt-2 text-gray-500">
+            {{ props.date }}
+        </p>
         <!-- Edit and Delete buttons -->
-        <div v-if="props.editable" class="mt-4">
+        <div v-show="props.editable" class="mt-4">
             <button
                 v-if="props.published"
                 class="mr-2 rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700"
