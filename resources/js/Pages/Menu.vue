@@ -76,6 +76,17 @@ onMounted(() => {
         <section class="menu py-20">
             <!-- Category Filter -->
             <div class="mb-10 flex flex-wrap justify-center space-x-2">
+                <!-- All Categories Button -->
+                <button
+                    @click="selectCategory(0)"
+                    class="rounded bg-amber-500 px-4 py-2 font-bold text-white hover:bg-amber-700"
+                    :class="{
+                        'bg-amber-700': selectedCategory === 0,
+                    }"
+                >
+                    Tous
+                </button>
+                <!-- Individual Category Buttons -->
                 <button
                     v-for="category in categories"
                     :key="category.id"
