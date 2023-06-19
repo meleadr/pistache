@@ -41,6 +41,24 @@ const props = defineProps({
 
 let showingModal = ref(false);
 
+let published = ref(props.published);
+
+// on click on archive button
+const archive = () => {
+    axios.put(`/api/menus/${props.id}`, {
+        published: 0,
+    });
+    published.value = false;
+};
+
+// on click on publish button
+const publish = () => {
+    axios.put(`/api/menus/${props.id}`, {
+        published: 1,
+    });
+    published.value = true;
+};
+
 // on click on delete button
 const supp = () => {
     axios.delete(`/api/menus/${props.id}`).then(() => {
@@ -69,16 +87,18 @@ const supp = () => {
         <!-- Edit and Delete buttons -->
         <div v-show="props.editable" class="mt-4">
             <button
-                v-if="props.published"
+                v-if="published"
                 class="mr-2 rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700"
+                @click="archive"
             >
                 Archiver
             </button>
             <button
                 v-else
                 class="mr-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+                @click="publish"
             >
-                Publié
+                Publier
             </button>
             <Link :href="route('menu.edit', props.id)">
                 <button
