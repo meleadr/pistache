@@ -34,9 +34,25 @@ const isInSelectedCategory = (menuItem) => {
     );
 };
 
+// Function to get categories of a menu item
+const getCategoriesOfMenuItem = (menuItem) => {
+    return menuHasCategories.value
+        .filter((menuHasCategory) => menuHasCategory.menu_id === menuItem.id)
+        .map((menuHasCategory) => {
+            return categories.value.find(
+                (category) => category.id === menuHasCategory.category_id
+            );
+        });
+};
+
 // Computed property for filtered menu items
 const filteredMenuItems = computed(() => {
-    return menuItems.value.filter(isInSelectedCategory);
+    return menuItems.value
+        .map((menuItem) => ({
+            ...menuItem,
+            categories: getCategoriesOfMenuItem(menuItem),
+        }))
+        .filter(isInSelectedCategory);
 });
 
 // Fetch menu items from API
@@ -107,6 +123,7 @@ onMounted(() => {
                         :id="item.id"
                         :title="item.title"
                         :content="item.content"
+                        :categories="item.categories"
                     />
                 </div>
             </div>
