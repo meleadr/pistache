@@ -124,6 +124,10 @@ onMounted(() => {
                         :title="item.title"
                         :content="item.content"
                         :categories="item.categories"
+                        :url_img="item.url_img"
+                        :published="item.published"
+                        :date="item.created_at"
+                        :editable="true"
                     />
                 </div>
             </div>

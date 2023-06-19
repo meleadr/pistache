@@ -14,8 +14,20 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    url_img: {
+        type: String,
+        required: true,
+    },
+    published: {
+        type: Boolean,
+        required: false,
+    },
     categories: {
         type: Array,
+        required: false,
+    },
+    date: {
+        type: String,
         required: false,
     },
     editable: {
@@ -40,6 +52,18 @@ const props = defineProps({
         </div>
         <!-- Edit and Delete buttons -->
         <div v-if="props.editable" class="mt-4">
+            <button
+                v-if="props.published"
+                class="mr-2 rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700"
+            >
+                Archiver
+            </button>
+            <button
+                v-else
+                class="mr-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+            >
+                Publié
+            </button>
             <button
                 class="mr-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
             >
