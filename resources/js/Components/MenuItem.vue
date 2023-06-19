@@ -15,11 +15,11 @@ const props = defineProps({
     },
     content: {
         type: String,
-        required: true,
+        required: false,
     },
     url_img: {
         type: String,
-        required: true,
+        required: false,
     },
     published: {
         type: Boolean,
