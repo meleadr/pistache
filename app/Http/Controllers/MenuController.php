@@ -11,7 +11,7 @@ class MenuController extends Controller
     // getAllMenus
 	public function getAllMenus()
 	{
-		$menus = Menu::all();
+		$menus = Menu::orderBy('created_at', 'desc')->get();
 		return response()->json($menus);
 	}
 
