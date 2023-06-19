@@ -22,6 +22,9 @@ const fetchMenu = async () => {
             }
         );
     });
+    menuItems.value.forEach((item) => {
+        item.published = item.published == 1 ? true : false;
+    });
 };
 
 // Fetch menu items and categories on component mount
