@@ -17,5 +17,7 @@ class Menu extends Model
     protected $fillable = [
         'title',
         'content',
+		'url_img',
+		'published',
     ];
 }

@@ -45,13 +45,17 @@ let published = ref(props.published);
 
 const performAction = () => {
     if (modalAction.value === "archive") {
-        axios.put(`/api/menus/${props.id}`, { published: 0 });
-        published.value = false;
+        axios.put(`/api/menus/${props.id}`, { published: 0 }).then(() => {
+            published.value = false;
+        });
     } else if (modalAction.value === "publish") {
-        axios.put(`/api/menus/${props.id}`, { published: 1 });
-        published.value = true;
+        axios.put(`/api/menus/${props.id}`, { published: 1 }).then(() => {
+            published.value = true;
+        });
     } else if (modalAction.value === "delete") {
-        axios.delete(`/api/menus/${props.id}`);
+        axios.delete(`/api/menus/${props.id}`).then(() => {
+            window.location.reload();
+        });
     }
     showingModal.value = false;
 };
