@@ -40,30 +40,25 @@ const props = defineProps({
 });
 
 let showingModal = ref(false);
-
+let modalAction = ref(null);
 let published = ref(props.published);
 
-// on click on archive button
-const archive = () => {
-    axios.put(`/api/menus/${props.id}`, {
-        published: 0,
-    });
-    published.value = false;
+const performAction = () => {
+    if (modalAction.value === "archive") {
+        axios.put(`/api/menus/${props.id}`, { published: 0 });
+        published.value = false;
+    } else if (modalAction.value === "publish") {
+        axios.put(`/api/menus/${props.id}`, { published: 1 });
+        published.value = true;
+    } else if (modalAction.value === "delete") {
+        axios.delete(`/api/menus/${props.id}`);
+    }
+    showingModal.value = false;
 };
 
-// on click on publish button
-const publish = () => {
-    axios.put(`/api/menus/${props.id}`, {
-        published: 1,
-    });
-    published.value = true;
-};
-
-// on click on delete button
-const supp = () => {
-    axios.delete(`/api/menus/${props.id}`).then(() => {
-        location.reload();
-    });
+const openModal = (action) => {
+    modalAction.value = action;
+    showingModal.value = true;
 };
 </script>
 
@@ -89,14 +84,14 @@ const supp = () => {
             <button
                 v-if="published"
                 class="mr-2 rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700"
-                @click="archive"
+                @click="openModal('archive')"
             >
                 Archiver
             </button>
             <button
                 v-else
                 class="mr-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
-                @click="publish"
+                @click="openModal('publish')"
             >
                 Publier
             </button>
@@ -109,26 +104,35 @@ const supp = () => {
             </Link>
             <button
                 class="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-                @click="showingModal = true"
+                @click="openModal('delete')"
             >
                 Delete
             </button>
         </div>
     </div>
+    <!-- Modal Component -->
     <Modal :show="showingModal" @close="showingModal = false">
         <div class="w-full rounded-lg bg-white p-8 shadow-lg">
-            <h3 class="mb-4 text-lg font-semibold">Supprimer le menu</h3>
+            <h3 class="mb-4 text-lg font-semibold">Confirmation</h3>
             <div class="mb-6">
                 <p class="text-gray-700">
-                    Êtes-vous sûr de vouloir supprimer ce menu ?
+                    Êtes-vous sûr de vouloir
+                    {{
+                        modalAction === "archive"
+                            ? "archiver"
+                            : modalAction === "publish"
+                            ? "publier"
+                            : "supprimer"
+                    }}
+                    ce menu ?
                 </p>
             </div>
             <div class="text-right">
                 <button
-                    class="rounded bg-red-500 px-4 py-2 font-bold text-white transition duration-200 ease-in-out hover:bg-red-700"
-                    @click="supp"
+                    class="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-200 ease-in-out hover:bg-blue-700"
+                    @click="performAction"
                 >
-                    Supprimer
+                    Confirmer
                 </button>
             </div>
         </div>
