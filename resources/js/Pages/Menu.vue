@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { Head } from "@inertiajs/vue3";
 import WebsiteLayout from "@/Layouts/WebsiteLayout.vue";
 import MenuItem from "@/Components/MenuItem.vue";
@@ -20,6 +20,24 @@ const selectedCategory = ref(0);
 const selectCategory = (category) => {
     selectedCategory.value = category;
 };
+
+// Function to check if a menu item is in the selected category
+const isInSelectedCategory = (menuItem) => {
+    if (selectedCategory.value === 0) {
+        // If no category is selected, return true for all menu items
+        return true;
+    }
+    return menuHasCategories.value.some(
+        (menuHasCategory) =>
+            menuHasCategory.menu_id === menuItem.id &&
+            menuHasCategory.category_id === selectedCategory.value
+    );
+};
+
+// Computed property for filtered menu items
+const filteredMenuItems = computed(() => {
+    return menuItems.value.filter(isInSelectedCategory);
+});
 
 // Fetch menu items from API
 const fetchMenu = async () => {
@@ -73,7 +91,7 @@ onMounted(() => {
 
             <!-- Menu Items -->
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <div v-for="item in menuItems" :key="item.id">
+                <div v-for="item in filteredMenuItems" :key="item.id">
                     <MenuItem
                         :id="item.id"
                         :title="item.title"
