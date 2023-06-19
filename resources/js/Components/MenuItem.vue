@@ -16,7 +16,7 @@ const props = defineProps({
     },
     categories: {
         type: Array,
-        required: true,
+        required: false,
     },
     editable: {
         type: Boolean,
@@ -35,7 +35,7 @@ const props = defineProps({
                 :key="index"
                 class="mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700"
             >
-                {{ category }}
+                {{ category.name }}
             </span>
         </div>
         <!-- Edit and Delete buttons -->
