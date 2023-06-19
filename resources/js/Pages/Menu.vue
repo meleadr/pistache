@@ -57,7 +57,7 @@ const filteredMenuItems = computed(() => {
 
 // Fetch menu items from API
 const fetchMenu = async () => {
-    const response = await axios.get("/api/menus");
+    const response = await axios.get("/api/menusPublished");
     menuItems.value = response.data;
 };
 

@@ -14,6 +14,13 @@ class MenuController extends Controller
 		return response()->json($menus);
 	}
 
+	//getAllMenusPublished
+	public function getAllMenusPublished()
+	{
+		$menus = Menu::where('published', 1)->get();
+		return response()->json($menus);
+	}
+
 	// getMenuById
 	public function getMenuById($id)
 	{

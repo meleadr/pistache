@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // route for menu CRUD operations
 Route::controller(MenuController::class)->group(function () {
 	Route::get('/menus', 'getAllMenus');
+	Route::get('/menusPublished', 'getAllMenusPublished');
 	Route::get('/menus/{id}', 'getMenuById');
 	Route::post('/menus', 'addMenu');
 	Route::put('/menus/{id}', 'updateMenu');
