@@ -1,5 +1,8 @@
 <script setup>
-import { defineProps } from "vue";
+import { ref } from "vue";
+import axios from "axios";
+import { Link } from "@inertiajs/vue3";
+import Modal from "@/Components/Modal.vue";
 
 const props = defineProps({
     id: {
@@ -35,6 +38,15 @@ const props = defineProps({
         default: false,
     },
 });
+
+let showingModal = ref(false);
+
+// on click on delete button
+const supp = () => {
+    axios.delete(`/api/menus/${props.id}`).then(() => {
+        location.reload();
+    });
+};
 </script>
 
 <template>
@@ -68,16 +80,37 @@ const props = defineProps({
             >
                 Publié
             </button>
-            <button
-                class="mr-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-            >
-                Edit
-            </button>
+            <Link :href="route('menu.edit', props.id)">
+                <button
+                    class="mr-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                >
+                    Edit
+                </button>
+            </Link>
             <button
                 class="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+                @click="showingModal = true"
             >
                 Delete
             </button>
         </div>
     </div>
+    <Modal :show="showingModal" @close="showingModal = false">
+        <div class="w-full rounded-lg bg-white p-8 shadow-lg">
+            <h3 class="mb-4 text-lg font-semibold">Supprimer le menu</h3>
+            <div class="mb-6">
+                <p class="text-gray-700">
+                    Êtes-vous sûr de vouloir supprimer ce menu ?
+                </p>
+            </div>
+            <div class="text-right">
+                <button
+                    class="rounded bg-red-500 px-4 py-2 font-bold text-white transition duration-200 ease-in-out hover:bg-red-700"
+                    @click="supp"
+                >
+                    Supprimer
+                </button>
+            </div>
+        </div>
+    </Modal>
 </template>
