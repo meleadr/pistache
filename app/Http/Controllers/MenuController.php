@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Menu;
+use App\Models\MenuHasCategory;
 
 class MenuController extends Controller
 {
@@ -53,8 +54,12 @@ class MenuController extends Controller
 	public function deleteMenu($id)
 	{
 		$menu = Menu::find($id);
+		$menuHasCategory = MenuHasCategory::where('menu_id', $id)->get();
 		if(is_null($menu)){
 			return response()->json(['message' => 'Menu Not Found'], 404);
+		}
+		foreach ($menuHasCategory as $menua) {
+			$menua->delete();
 		}
 		$menu->delete();
 		return response()->json(null, 204);
