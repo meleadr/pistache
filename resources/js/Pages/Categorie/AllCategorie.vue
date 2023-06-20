@@ -4,6 +4,7 @@ import { Head, Link } from "@inertiajs/vue3";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import CategoryItem from "@/Components/CategoryItem.vue";
 
 // Category items
 const categoryItem = ref([]);
@@ -69,13 +70,23 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-
-        <span
-            v-for="(category, index) in categoryItem"
-            :key="index"
-            class="mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700"
-        >
-            {{ category.name }}
-        </span>
+        <div>
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="border-b border-gray-200 p-6">
+                        <div
+                            class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                        >
+                            <CategoryItem
+                                v-for="item in categoryItem"
+                                :key="item.id"
+                                :id="item.id"
+                                :name="item.name"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </AuthenticatedLayout>
 </template>
