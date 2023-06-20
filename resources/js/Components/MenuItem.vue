@@ -69,6 +69,7 @@ const openModal = (action) => {
 <template>
     <div class="overflow-hidden rounded-lg bg-white shadow-md" v-if="props.id">
         <img
+            v-show="!props.editable"
             :src="props.url_img"
             alt="Menu Image"
             class="h-64 w-full object-cover"
