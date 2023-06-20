@@ -37,8 +37,8 @@ Route::get('/dashboard/menu/add', function () {
 	return Inertia::render('Menu/MenuForm');
 })->middleware(['auth', 'verified'])->name('menu.add');
 
-Route::get('/dashboard/menu/edit/{id}', function () {
-	return Inertia::render('Menu/MenuForm');
+Route::get('/dashboard/menu/edit/{id}', function ($id) {
+	return Inertia::render('Menu/MenuForm', ['id' => $id]);
 })->middleware(['auth', 'verified'])->name('menu.edit');
 
 // category
