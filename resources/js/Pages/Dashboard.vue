@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 </script>
 
 <template>
@@ -8,17 +9,25 @@ import { Head } from "@inertiajs/vue3";
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Dashboard
             </h2>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">Vous êtes connecté</div>
                 </div>
             </div>
+        </div>
+        <!--Retour sur le siteweb-->
+        <div class="mt-4 flex items-center justify-center">
+            <Link href="/">
+                <PrimaryButton class="p-5 font-bold">
+                    Retour sur le site
+                </PrimaryButton>
+            </Link>
         </div>
     </AuthenticatedLayout>
 </template>
