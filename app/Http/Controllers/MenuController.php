@@ -15,6 +15,28 @@ class MenuController extends Controller
 		return response()->json($menus);
 	}
 
+	// getAllMenusWithCategory
+	public function getAllMenusWithCategory()
+	{
+		$menus = Menu::orderBy('created_at', 'desc')->get();
+		foreach ($menus as $menu) {
+			$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
+			$menu->categories = $menuHasCategory;
+		}
+		return response()->json($menus);
+	}
+
+	// getAllMenusPublishedWithCategory
+	public function getAllMenusPublishedWithCategory()
+	{
+		$menus = Menu::where('published', 1)->get();
+		foreach ($menus as $menu) {
+			$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
+			$menu->categories = $menuHasCategory;
+		}
+		return response()->json($menus);
+	}
+
 	//getAllMenusPublished
 	public function getAllMenusPublished()
 	{
@@ -29,6 +51,18 @@ class MenuController extends Controller
 		if(is_null($menu)){
 			return response()->json(['message' => 'Menu Not Found'], 404);
 		}
+		return response()->json($menu);
+	}
+
+	// getMenuByIdWithCategory
+	public function getMenuByIdWithCategory($id)
+	{
+		$menu = Menu::find($id);
+		if(is_null($menu)){
+			return response()->json(['message' => 'Menu Not Found'], 404);
+		}
+		$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
+		$menu->categories = $menuHasCategory;
 		return response()->json($menu);
 	}
 
