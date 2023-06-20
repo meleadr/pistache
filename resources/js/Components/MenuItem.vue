@@ -67,51 +67,64 @@ const openModal = (action) => {
 </script>
 
 <template>
-    <div class="rounded border border-gray-200 p-6 shadow-sm" v-if="props.id">
-        <h3 class="mb-2 text-xl">{{ props.title }}</h3>
-        <p v-show="!props.editable">{{ props.content }}</p>
-        <div v-show="!props.editable" class="mt-2">
-            <span
-                v-for="(category, index) in props.categories"
-                :key="index"
-                class="mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700"
-            >
-                {{ category.name }}
-            </span>
-        </div>
-        <!-- Date de création-->
-        <p v-show="props.editable" class="text-md mt-2 text-gray-500">
-            {{ props.date }}
-        </p>
-        <!-- Edit and Delete buttons -->
-        <div v-show="props.editable" class="mt-4">
-            <button
-                v-if="published"
-                class="mr-2 rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700"
-                @click="openModal('archive')"
-            >
-                Archiver
-            </button>
-            <button
-                v-else
-                class="mr-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
-                @click="openModal('publish')"
-            >
-                Publier
-            </button>
-            <Link :href="route('menu.edit', props.id)">
-                <button
-                    class="mr-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+    <div class="overflow-hidden rounded-lg bg-white shadow-md" v-if="props.id">
+        <img
+            :src="props.url_img"
+            alt="Menu Image"
+            class="h-64 w-full object-cover"
+        />
+        <div class="p-6">
+            <h3 class="mb-2 text-xl font-semibold">{{ props.title }}</h3>
+            <p v-show="!props.editable" class="text-gray-600">
+                {{ props.content }}
+            </p>
+            <div v-show="!props.editable" class="mt-2">
+                <span
+                    v-for="(category, index) in props.categories"
+                    :key="index"
+                    class="mr-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700"
                 >
-                    Edit
-                </button>
-            </Link>
-            <button
-                class="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-                @click="openModal('delete')"
-            >
-                Delete
-            </button>
+                    {{ category.name }}
+                </span>
+            </div>
+            <!-- Date de création-->
+            <p v-show="props.editable" class="text-md mt-2 text-gray-500">
+                {{ props.date }}
+            </p>
+            <!-- Edit and Delete buttons -->
+            <div v-show="props.editable" class="mt-4 flex justify-between">
+                <div>
+                    <button
+                        v-if="published"
+                        class="mr-2 rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700"
+                        @click="openModal('archive')"
+                    >
+                        Archiver
+                    </button>
+                    <button
+                        v-else
+                        class="mr-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+                        @click="openModal('publish')"
+                    >
+                        Publier
+                    </button>
+                </div>
+                <div>
+                    <Link :href="route('menu.edit', props.id)">
+                        <button
+                            class="mr-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                        >
+                            Edit
+                        </button>
+                    </Link>
+                    <button
+                        class="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+                        @click="openModal('delete')"
+                    >
+                        Delete
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Modal Component -->
