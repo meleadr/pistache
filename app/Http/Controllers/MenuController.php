@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\MenuHasCategory;
+use App\Models\Category;
 
 class MenuController extends Controller
 {
@@ -21,8 +22,15 @@ class MenuController extends Controller
 		$menus = Menu::orderBy('created_at', 'desc')->get();
 		foreach ($menus as $menu) {
 			$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
-			$menu->categories = $menuHasCategory;
+			$categories = collect();
+			foreach ($menuHasCategory as $menua) {
+				$category = Category::find($menua->category_id);
+				$categories->push($category);
+			}
+			// Attach Categories directly to the menu
+			$menu->categories = $categories;
 		}
+	
 		return response()->json($menus);
 	}
 
@@ -32,8 +40,15 @@ class MenuController extends Controller
 		$menus = Menu::where('published', 1)->get();
 		foreach ($menus as $menu) {
 			$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
-			$menu->categories = $menuHasCategory;
+			$categories = collect();
+			foreach ($menuHasCategory as $menua) {
+				$category = Category::find($menua->category_id);
+				$categories->push($category);
+			}
+			// Attach Categories directly to the menu
+			$menu->categories = $categories;
 		}
+	
 		return response()->json($menus);
 	}
 
@@ -62,7 +77,14 @@ class MenuController extends Controller
 			return response()->json(['message' => 'Menu Not Found'], 404);
 		}
 		$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
-		$menu->categories = $menuHasCategory;
+		$categories = collect();
+		foreach ($menuHasCategory as $menua) {
+			$category = Category::find($menua->category_id);
+			$categories->push($category);
+		}
+		// Attach Categories directly to the menu
+		$menu->categories = $categories;
+	
 		return response()->json($menu);
 	}
 
