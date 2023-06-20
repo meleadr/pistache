@@ -82,6 +82,7 @@ onMounted(() => {
                                 :key="item.id"
                                 :id="item.id"
                                 :name="item.name"
+                                :date="item.created_at"
                             />
                         </div>
                     </div>

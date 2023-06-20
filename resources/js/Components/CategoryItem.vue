@@ -13,6 +13,10 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    date: {
+        type: String,
+        required: true,
+    },
 });
 
 let showingModal = ref(false);
@@ -34,18 +38,27 @@ const openModal = (action) => {
 </script>
 
 <template>
-    <div class="overflow-hidden rounded-lg bg-white shadow-md" v-if="props.id">
+    <div
+        class="overflow-hidden rounded-lg bg-white p-5 shadow-md"
+        v-if="props.id"
+    >
         <!-- Category name -->
-        <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-lg font-semibold leading-tight text-gray-900">
+        <div>
+            <h3 class="text-xl font-semibold leading-tight text-gray-900">
                 {{ props.name }}
             </h3>
         </div>
+        <!-- Category date -->
+        <div class="mt-2">
+            <span class="font-base text-md leading-tight text-gray-500">
+                {{ props.date }}
+            </span>
+        </div>
         <!-- Edit and Delete buttons -->
-        <div class="mt-4 flex justify-around py-4">
+        <div class="mt-2 flex justify-around py-2">
             <Link :href="route('menu.edit', props.id)">
                 <button
-                    class="mr-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                    class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                 >
                     Edit
                 </button>
