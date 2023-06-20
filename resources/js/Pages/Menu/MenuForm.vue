@@ -27,6 +27,7 @@ let categories = ref([]);
 let displayCategories = ref([]);
 
 const loadMenuItem = async (id) => {
+    if (id == 0) return;
     const res = await axios.get(`/api/menusWithCategory/${id}`);
     const menuData = res.data;
     // Transform categories into an array of objects with id and name properties
