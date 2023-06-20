@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import { ref, watchEffect, toRef } from "vue";
+import { ref, toRef, onMounted } from "vue";
 import axios from "axios";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
@@ -17,30 +17,47 @@ const id = toRef(props, "id"); // Making id reactive
 let form = ref({
     title: "",
     content: "",
+    url_img: "",
     categories: [],
 });
 
-let categories = ref([
-    "Salades",
-    "Plats principaux",
-    "Végétarien",
-    "Fruits de mer",
-]);
+let categories = ref([]);
 
 const loadMenuItem = async (id) => {
-    const res = await axios.get(`/api/menus/${id}`);
+    const res = await axios.get(`/api/menusWithCategory/${id}`);
     form.value = res.data;
+    form.value.categories = res.data.categories.map((category) => category.id); // extract the ids
 };
 
-watchEffect(() => {
+const loadCategories = async () => {
+    const res = await axios.get("/api/categories");
+    categories.value = res.data;
+};
+
+onMounted(async () => {
     if (id.value) {
-        loadMenuItem(id.value);
+        await loadCategories();
+        await loadMenuItem(id.value);
+    } else {
+        await loadCategories();
     }
 });
 
 let title = ref(
     id.value != null ? "Modifier le menu" + id.value : "Ajouter un menu"
 );
+
+const handleCheckboxChange = (categoryId) => {
+    const index = form.value.categories.indexOf(categoryId);
+
+    if (index > -1) {
+        // if the category is already in the array, remove it
+        form.value.categories.splice(index, 1);
+    } else {
+        // if the category is not in the array, add it
+        form.value.categories.push(categoryId);
+    }
+};
 
 const onSubmit = async () => {
     if (id.value) {
@@ -81,20 +98,23 @@ const onSubmit = async () => {
                 ></textarea>
                 <div
                     v-for="category in categories"
-                    :key="category"
+                    :key="category.id"
                     class="mb-2 flex items-center"
                 >
                     <input
                         type="checkbox"
-                        :id="category"
-                        :value="category"
+                        :id="category.name"
+                        :value="category.id"
                         v-model="form.categories"
+                        :checked="form.categories.includes(category.id)"
+                        @change="handleCheckboxChange(category.id)"
                         class="mr-2"
                     />
-                    <label :for="category" class="text-gray-700">{{
-                        category
-                    }}</label>
+                    <label :for="category.name" class="text-gray-700">
+                        {{ category.name }}
+                    </label>
                 </div>
+
                 <div class="flex justify-center">
                     <PrimaryButton type="submit" class="mx-auto">
                         {{ props.id != null ? "Modifier" : "Ajouter" }}
