@@ -24,6 +24,15 @@ class MenuHasCategoryController extends Controller
 		return response()->json($menuHasCategory);
 	}
 
+	public function getMenuHasCategoryByMenuId($id)
+	{
+		$menuHasCategory = MenuHasCategory::where('menu_id', $id)->get();
+		if(is_null($menuHasCategory)){
+			return response()->json(['message' => 'MenuHasCategory Not Found'], 404);
+		}
+		return response()->json($menuHasCategory);
+	}
+
 	// addMenuHasCategory
 	public function addMenuHasCategory(Request $request)
 	{

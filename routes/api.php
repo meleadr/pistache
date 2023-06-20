@@ -43,6 +43,7 @@ Route::controller(CategoryController::class)->group(function () {
 Route::controller(MenuHasCategoryController::class)->group(function () {
 	Route::get('/menuHasCategory', 'getAllMenuHasCategories');
 	Route::get('/menuHasCategory/{id}', 'getMenuHasCategoryById');
+	Route::get('/menuHasCategory/menu/{id}', 'getMenuHasCategoryByMenuId');
 	Route::post('/menuHasCategory', 'addMenuHasCategory');
 	Route::put('/menuHasCategory/{id}', 'updateMenuHasCategory');
 	Route::delete('/menuHasCategory/{id}', 'deleteMenuHasCategory');
