@@ -177,6 +177,30 @@ const showingNavigationDropdown = ref(false);
                             </div>
                         </div>
 
+                        <div>
+                            <ResponsiveNavLink
+                                :href="route('menu.index')"
+                                :active="
+                                    route().current('menu.index') ||
+                                    route().current('menu.add') ||
+                                    route().current('menu.edit')
+                                "
+                            >
+                                Menus
+                            </ResponsiveNavLink>
+
+                            <ResponsiveNavLink
+                                :href="route('categorie.index')"
+                                :active="
+                                    route().current('categorie.index') ||
+                                    route().current('categorie.add') ||
+                                    route().current('categorie.edit')
+                                "
+                            >
+                                Catégories
+                            </ResponsiveNavLink>
+                        </div>
+
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
                                 Profile
