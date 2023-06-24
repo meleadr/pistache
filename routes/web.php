@@ -50,8 +50,8 @@ Route::get('/dashboard/categorie/add', function () {
 	return Inertia::render('Categorie/CategorieForm');
 })->middleware(['auth', 'verified'])->name('categorie.add');
 
-Route::get('/dashboard/categorie/edit/{id}', function () {
-	return Inertia::render('Categorie/CategorieForm');
+Route::get('/dashboard/categorie/edit/{id}', function ($id) {
+	return Inertia::render('Categorie/CategorieForm', ['id' => $id]);
 })->middleware(['auth', 'verified'])->name('categorie.edit');
 
 Route::get('/menu', function () {
