@@ -99,7 +99,7 @@ const onSubmit = async () => {
             <div class="px-4 sm:mb-10 lg:w-1/2">
                 <form
                     @submit.prevent="onSubmit"
-                    class="mx-auto max-w-xl space-y-3"
+                    class="mx-auto max-w-xl space-y-4"
                 >
                     <input
                         v-model="form.title"
@@ -134,7 +134,7 @@ const onSubmit = async () => {
                         </label>
                     </div>
 
-                    <div class="mt-50 flex justify-center">
+                    <div class="flex justify-center">
                         <PrimaryButton type="button" class="mx-auto">
                             <Link :href="route('menu.index')">Annuler</Link>
                         </PrimaryButton>
