@@ -56,7 +56,7 @@ const openModal = (action) => {
         </div>
         <!-- Edit and Delete buttons -->
         <div class="mt-2 flex justify-around py-2">
-            <Link :href="route('menu.edit', props.id)">
+            <Link :href="route('categorie.edit', props.id)">
                 <button
                     class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                 >
