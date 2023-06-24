@@ -83,6 +83,7 @@ onMounted(() => {
                                 :id="item.id"
                                 :name="item.name"
                                 :date="item.created_at"
+                                :editable="true"
                             />
                         </div>
                     </div>

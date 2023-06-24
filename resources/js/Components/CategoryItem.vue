@@ -17,6 +17,10 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    editable: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 let showingModal = ref(false);
@@ -55,7 +59,7 @@ const openModal = (action) => {
             </span>
         </div>
         <!-- Edit and Delete buttons -->
-        <div class="mt-2 flex justify-around py-2">
+        <div v-show="editable" class="mt-2 flex justify-around py-2">
             <Link :href="route('categorie.edit', props.id)">
                 <button
                     class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
