@@ -39,13 +39,21 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                                 <NavLink
                                     :href="route('menu.index')"
-                                    :active="route().current('menu.index')"
+                                    :active="
+                                        route().current('menu.index') ||
+                                        route().current('menu.add') ||
+                                        route().current('menu.edit')
+                                    "
                                 >
                                     Menus
                                 </NavLink>
                                 <NavLink
                                     :href="route('categorie.index')"
-                                    :active="route().current('categorie.index')"
+                                    :active="
+                                        route().current('categorie.index') ||
+                                        route().current('categorie.add') ||
+                                        route().current('categorie.edit')
+                                    "
                                 >
                                     Catégories
                                 </NavLink>
