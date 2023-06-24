@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import { ref, toRef, onMounted } from "vue";
 import axios from "axios";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -136,7 +136,7 @@ const onSubmit = async () => {
 
                     <div class="mt-50 flex justify-center">
                         <PrimaryButton type="button" class="mx-auto">
-                            Annuler
+                            <Link :href="route('menu.index')">Annuler</Link>
                         </PrimaryButton>
                         <PrimaryButton type="submit" class="mx-auto">
                             {{ props.id != null ? "Modifier" : "Ajouter" }}
