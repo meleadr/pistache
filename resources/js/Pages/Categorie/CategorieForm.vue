@@ -17,7 +17,7 @@ const id = toRef(props, "id"); // Making id reactive
 
 let form = ref({
     id: 0,
-    name: "",
+    name: "Nouvelle catégorie",
     date: new Date().toLocaleDateString("fr-FR", {
         year: "numeric",
         month: "long",
@@ -27,7 +27,7 @@ let form = ref({
 
 const loadCategoryItem = async (id) => {
     if (id == 0) return;
-    const res = await axios.get(`/api/categorie/${id}`);
+    const res = await axios.get(`/api/categories/${id}`);
     const categoryData = res.data;
     // transform created_at date to french format and save it in form.date
     categoryData.date = new Date(categoryData.created_at).toLocaleDateString(
@@ -53,9 +53,9 @@ let title = ref(
 
 const onSubmit = async () => {
     if (id.value) {
-        await axios.put(`/api/categorie/${id.value}`, form.value);
+        await axios.put(`/api/categories/${id.value}`, form.value);
     } else {
-        await axios.post("/api/categorie", form.value);
+        await axios.post("/api/categories", form.value);
     }
 };
 </script>
