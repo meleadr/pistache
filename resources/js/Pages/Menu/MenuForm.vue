@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import { ref, toRef, onMounted, computed } from "vue";
+import { ref, toRef, onMounted } from "vue";
 import axios from "axios";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import MenuItem from "@/Components/MenuItem.vue";
@@ -54,7 +54,7 @@ onMounted(async () => {
 });
 
 let title = ref(
-    id.value != null ? "Modifier le menu" + id.value : "Ajouter un menu"
+    id.value != null ? "Modifier le menu " + id.value : "Ajouter un menu"
 );
 
 const handleCheckboxChange = (categoryId) => {
@@ -134,7 +134,10 @@ const onSubmit = async () => {
                         </label>
                     </div>
 
-                    <div class="flex justify-center">
+                    <div class="mt-50 flex justify-center">
+                        <PrimaryButton type="button" class="mx-auto">
+                            Annuler
+                        </PrimaryButton>
                         <PrimaryButton type="submit" class="mx-auto">
                             {{ props.id != null ? "Modifier" : "Ajouter" }}
                         </PrimaryButton>
