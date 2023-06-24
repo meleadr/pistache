@@ -24,7 +24,7 @@ let modalAction = ref(null);
 
 const performAction = () => {
     if (modalAction.value === "delete") {
-        axios.delete(`/api/menus/${props.id}`).then(() => {
+        axios.delete(`/api/categories/${props.id}`).then(() => {
             window.location.reload();
         });
     }
