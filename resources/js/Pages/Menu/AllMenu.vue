@@ -1,19 +1,35 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import MenuItem from "@/Components/MenuItem.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
-// Menu items
-const menuItems = ref([]);
+// Reactive menu items
+const menuItems = computed(() => {
+    if (searchText.value.length > 0) {
+        return originalMenuItems.value.filter((item) => {
+            return item.title
+                .toLowerCase()
+                .includes(searchText.value.toLowerCase());
+        });
+    } else {
+        return originalMenuItems.value;
+    }
+});
+
+// Original menu items
+const originalMenuItems = ref([]);
+
+// Reactive search text
+const searchText = ref("");
 
 // Fetch menu items from API
 const fetchMenu = async () => {
     const response = await axios.get("/api/menus");
-    menuItems.value = response.data;
-    menuItems.value.forEach((item) => {
+    originalMenuItems.value = response.data;
+    originalMenuItems.value.forEach((item) => {
         item.created_at = new Date(item.created_at).toLocaleDateString(
             "fr-FR",
             {
@@ -22,8 +38,6 @@ const fetchMenu = async () => {
                 day: "numeric",
             }
         );
-    });
-    menuItems.value.forEach((item) => {
         item.published = item.published == 1 ? true : false;
     });
 };
@@ -58,6 +72,7 @@ onMounted(() => {
                                     name="search"
                                     placeholder="Rechercher un menu"
                                     class="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-purple-500 focus:ring-purple-500"
+                                    v-model="searchText"
                                 />
                             </div>
                             <SecondaryButton>

@@ -1,19 +1,22 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import CategoryItem from "@/Components/CategoryItem.vue";
 
-// Category items
-const categoryItem = ref([]);
+// Original category items
+const originalCategoryItems = ref([]);
+
+// Reactive search text
+const searchText = ref("");
 
 // Fetch categories from API
 const fetchCategory = async () => {
     const response = await axios.get("/api/categories");
-    categoryItem.value = response.data;
-    categoryItem.value.forEach((item) => {
+    originalCategoryItems.value = response.data;
+    originalCategoryItems.value.forEach((item) => {
         item.created_at = new Date(item.created_at).toLocaleDateString(
             "fr-FR",
             {
@@ -22,11 +25,22 @@ const fetchCategory = async () => {
                 day: "numeric",
             }
         );
-    });
-    categoryItem.value.forEach((item) => {
         item.published = item.published == 1 ? true : false;
     });
 };
+
+// Reactive category items
+const categoryItems = computed(() => {
+    if (searchText.value.length > 0) {
+        return originalCategoryItems.value.filter((item) => {
+            return item.name
+                .toLowerCase()
+                .includes(searchText.value.toLowerCase());
+        });
+    } else {
+        return originalCategoryItems.value;
+    }
+});
 
 // Fetch category items
 onMounted(() => {
@@ -58,6 +72,7 @@ onMounted(() => {
                                     name="search"
                                     placeholder="Rechercher une catégorie"
                                     class="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-purple-500 focus:ring-purple-500"
+                                    v-model="searchText"
                                 />
                             </div>
                             <SecondaryButton>
@@ -78,7 +93,7 @@ onMounted(() => {
                             class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
                         >
                             <CategoryItem
-                                v-for="item in categoryItem"
+                                v-for="item in categoryItems"
                                 :key="item.id"
                                 :id="item.id"
                                 :name="item.name"
