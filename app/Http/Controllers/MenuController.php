@@ -92,6 +92,14 @@ class MenuController extends Controller
 	public function addMenu(Request $request)
 	{
 		$menu = Menu::create($request->all());
+		// Add Categories to the menu
+		$menuHasCategory = $request->categories;
+		foreach ($menuHasCategory as $menua) {
+			$menuHasCategory = new MenuHasCategory();
+			$menuHasCategory->menu_id = $menu->id;
+			$menuHasCategory->category_id = $menua['id'];
+			$menuHasCategory->save();
+		}
 		return response($menu, 201);
 	}
 
@@ -103,6 +111,19 @@ class MenuController extends Controller
 			return response()->json(['message' => 'Menu Not Found'], 404);
 		}
 		$menu->update($request->all());
+		// Delete all categories from the menu
+		$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
+		foreach ($menuHasCategory as $menua) {
+			$menua->delete();
+		}
+		// Add Categories to the menu
+		$menuHasCategory = $request->categories;
+		foreach ($menuHasCategory as $menua) {
+			$menuHasCategory = new MenuHasCategory();
+			$menuHasCategory->menu_id = $menu->id;
+			$menuHasCategory->category_id = $menua['id'];
+			$menuHasCategory->save();
+		}
 		return response($menu, 200);
 	}
 
