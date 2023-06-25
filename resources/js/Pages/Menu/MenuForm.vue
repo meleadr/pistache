@@ -25,12 +25,12 @@ let form = ref({
 
 let categories = ref([]);
 let displayCategories = ref([]);
+let imageFile = ref(null);
 
 const loadMenuItem = async (id) => {
     if (id == 0) return;
     const res = await axios.get(`/api/menusWithCategory/${id}`);
     const menuData = res.data;
-    // Transform categories into an array of objects with id and name properties
     menuData.categories = menuData.categories.map((cat) => ({
         id: cat.id,
         name: cat.name,
@@ -63,10 +63,8 @@ const handleCheckboxChange = (categoryId) => {
     );
 
     if (index > -1) {
-        // if the category is already in the array, remove it
         form.value.categories.splice(index, 1);
     } else {
-        // if the category is not in the array, add it
         const categoryToAdd = categories.value.find(
             (category) => category.id === categoryId
         );
@@ -76,18 +74,41 @@ const handleCheckboxChange = (categoryId) => {
     }
 };
 
+const handleImageChange = (e) => {
+    imageFile.value = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        form.value.url_img = e.target.result;
+    };
+    reader.readAsDataURL(imageFile.value);
+};
+
 const onSubmit = async () => {
+    const formData = new FormData();
+    formData.append("title", form.value.title);
+    formData.append("content", form.value.content);
+
+    // Append each category separately
+    form.value.categories.forEach((category, index) => {
+        formData.append(`categories[${index}]`, category.id);
+    });
+
+    formData.append("url_img", imageFile.value);
+    let response;
     if (id.value) {
-        await axios.put(`/api/menus/${id.value}`, form.value).then(() => {
-            // Redirect to the index page
-            window.location = route("menu.index");
+        response = await axios.put(`/api/menus/${id.value}`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
         });
     } else {
-        await axios.post("/api/menus", form.value).then(() => {
-            // Redirect to the index page
-            window.location = route("menu.index");
+        response = await axios.post("/api/menus", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
         });
     }
+    window.location = route("menu.index");
 };
 </script>
 
@@ -105,7 +126,7 @@ const onSubmit = async () => {
             <div class="px-4 sm:mb-10 lg:w-1/2">
                 <form
                     @submit.prevent="onSubmit"
-                    class="mx-auto max-w-xl space-y-4"
+                    class="mx-auto max-w-xl space-y-6"
                 >
                     <input
                         v-model="form.title"
@@ -139,7 +160,13 @@ const onSubmit = async () => {
                             {{ category.name }}
                         </label>
                     </div>
-
+                    <input
+                        type="file"
+                        name="url_img"
+                        id="url_img"
+                        accept="image/png, image/jpeg"
+                        @change="handleImageChange"
+                    />
                     <div class="flex justify-center">
                         <PrimaryButton type="button" class="mx-auto">
                             <Link :href="route('menu.index')">Annuler</Link>

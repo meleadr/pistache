@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\MenuHasCategory;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
@@ -91,13 +92,22 @@ class MenuController extends Controller
 	// addMenu
 	public function addMenu(Request $request)
 	{
+		// If there's an image
+		if ($request->hasFile('url_img')) {
+			$file = $request->file('url_img');
+			$extension = $file->getClientOriginalExtension(); // get image extension
+			$filename = $request->id . '.' . $extension; // rename image
+			$file->move('img/menu/', $filename); // move image to appropriate directory
+			$request->merge(['url_img' => '/img/menu/' . $filename]); // set the url_img attribute
+		}
+
 		$menu = Menu::create($request->all());
-		// Add Categories to the menu
-		$menuHasCategory = $request->categories;
-		foreach ($menuHasCategory as $menua) {
+
+		$categories = $request->categories;
+		foreach ($categories as $category) {
 			$menuHasCategory = new MenuHasCategory();
 			$menuHasCategory->menu_id = $menu->id;
-			$menuHasCategory->category_id = $menua['id'];
+			$menuHasCategory->category_id = $category['id'];
 			$menuHasCategory->save();
 		}
 		return response($menu, 201);
@@ -110,12 +120,29 @@ class MenuController extends Controller
 		if(is_null($menu)){
 			return response()->json(['message' => 'Menu Not Found'], 404);
 		}
+
+		// If there's an image
+		if ($request->hasFile('url_img')) {
+			// Delete the old image
+			$oldImage = str_replace('/storage', '', $menu->url_img);
+			Storage::delete('/public' . $oldImage);
+
+			$file = $request->file('url_img');
+			$extension = $file->getClientOriginalExtension(); // get image extension
+			$filename = $request->id . '.' . $extension; // rename image
+			$path = $file->storeAs('public/img/menu', $filename); // move image to appropriate directory
+			$url = Storage::url($path);
+			$request->merge(['url_img' => $url]); // set the url_img attribute
+		}
+
 		$menu->update($request->all());
+
 		// Delete all categories from the menu
 		$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
 		foreach ($menuHasCategory as $menua) {
 			$menua->delete();
 		}
+
 		// Add Categories to the menu
 		$menuHasCategory = $request->categories;
 		foreach ($menuHasCategory as $menua) {
