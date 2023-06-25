@@ -17,7 +17,7 @@ const id = toRef(props, "id"); // Making id reactive
 
 let form = ref({
     id: 0,
-    name: "Nouvelle catégorie",
+    name: "",
     date: new Date().toLocaleDateString("fr-FR", {
         year: "numeric",
         month: "long",
@@ -80,8 +80,8 @@ const onSubmit = async () => {
             </h2>
         </template>
 
-        <div class="flex flex-col py-12 lg:flex-row">
-            <div class="px-4 sm:mb-10 lg:w-1/2">
+        <section class="flex flex-col py-12 lg:flex-row">
+            <article class="px-4 sm:mb-10 lg:w-1/2">
                 <form
                     @submit.prevent="onSubmit"
                     class="mx-auto max-w-xl space-y-4"
@@ -104,14 +104,14 @@ const onSubmit = async () => {
                         </PrimaryButton>
                     </div>
                 </form>
-            </div>
-            <div class="px-4 lg:w-1/2">
+            </article>
+            <section class="px-4 lg:w-1/2">
                 <CategoryItem
                     :id="form.id"
                     :name="form.name"
                     :date="form.date"
                 />
-            </div>
-        </div>
+            </section>
+        </section>
     </AuthenticatedLayout>
 </template>
