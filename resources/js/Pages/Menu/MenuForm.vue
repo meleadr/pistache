@@ -17,14 +17,14 @@ const id = toRef(props, "id"); // Making id reactive
 
 let form = ref({
     id: 0,
-    title: "Titre du menu",
-    content: "Contenu du menu",
+    title: "",
+    content: "",
     url_img: "/img/menu/default.png",
     categories: [],
 });
 
 let categories = ref([]);
-let displayCategories = ref([]);
+let displayCategories = ref(form.value.categories);
 let imageFile = ref(null);
 
 const loadMenuItem = async (id) => {
