@@ -32,7 +32,7 @@ const inspirationImages = ref([
             class="hero flex h-screen items-center justify-center bg-cover bg-center"
             :style="{ 'background-image': `url(${heroImage})` }"
         >
-            <div
+            <article
                 class="hero-content flex flex-col items-center text-center text-white"
             >
                 <h1 class="mb-8 text-5xl">{{ heroTitle }}</h1>
@@ -43,7 +43,7 @@ const inspirationImages = ref([
                         Découvrez notre menu
                     </NavLink>
                 </PrimaryButton>
-            </div>
+            </article>
         </section>
 
         <!-- Section À propos -->
@@ -54,14 +54,16 @@ const inspirationImages = ref([
 
         <!-- Section Photos d'inspirations -->
         <section class="inspiration grid grid-cols-1 gap-4 py-5 lg:grid-cols-3">
-            <div class="aspect-w-2 aspect-h-1 col-span-1 lg:col-span-2">
+            <article class="aspect-w-2 aspect-h-1 col-span-1 lg:col-span-2">
                 <img
                     :src="inspirationImages[0]"
                     :alt="`Inspiration image 1`"
                     class="h-full w-full object-cover"
                 />
-            </div>
-            <div class="col-span-1 gap-4 lg:col-span-1 lg:grid lg:grid-rows-2">
+            </article>
+            <article
+                class="col-span-1 gap-4 lg:col-span-1 lg:grid lg:grid-rows-2"
+            >
                 <div class="aspect-w-1 aspect-h-1">
                     <img
                         :src="inspirationImages[1]"
@@ -76,7 +78,7 @@ const inspirationImages = ref([
                         class="h-full w-full object-cover"
                     />
                 </div>
-            </div>
+            </article>
         </section>
 
         <!-- Section Call To Action -->
