@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\MenuHasCategory;
 
 class CategoryController extends Controller
 {
@@ -48,6 +49,12 @@ class CategoryController extends Controller
 		$category = Category::find($id);
 		if(is_null($category)){
 			return response()->json(['message' => 'Category Not Found'], 404);
+		}
+
+		// Delete all menu_has_category with this category_id
+		$menuHasCategory = MenuHasCategory::where('category_id', $id)->get();
+		foreach ($menuHasCategory as $mhc) {
+			$mhc->delete();
 		}
 		$category->delete();
 		return response()->json(null, 204);
