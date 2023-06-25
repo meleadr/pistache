@@ -42,10 +42,7 @@ const openModal = (action) => {
 </script>
 
 <template>
-    <div
-        class="overflow-hidden rounded-lg bg-white p-5 shadow-md"
-        v-if="props.id"
-    >
+    <div class="overflow-hidden rounded-lg bg-white p-5 shadow-md">
         <!-- Category name -->
         <div>
             <h3 class="text-xl font-semibold leading-tight text-gray-900">
