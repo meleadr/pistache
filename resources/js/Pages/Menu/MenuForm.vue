@@ -78,14 +78,12 @@ const handleCheckboxChange = (categoryId) => {
 
 const onSubmit = async () => {
     if (id.value) {
-        await axios.put(`/api/menus/${id.value}`, form.value).then((data) => {
-            console.log(data);
+        await axios.put(`/api/menus/${id.value}`, form.value).then(() => {
             // Redirect to the index page
             window.location = route("menu.index");
         });
     } else {
-        await axios.post("/api/menus", form.value).then((data) => {
-            console.log(data);
+        await axios.post("/api/menus", form.value).then(() => {
             // Redirect to the index page
             window.location = route("menu.index");
         });

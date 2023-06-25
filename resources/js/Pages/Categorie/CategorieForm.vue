@@ -53,9 +53,15 @@ let title = ref(
 
 const onSubmit = async () => {
     if (id.value) {
-        await axios.put(`/api/categories/${id.value}`, form.value);
+        await axios.put(`/api/categories/${id.value}`, form.value).then(() => {
+            // redirect to categories list
+            window.location.href = route("categorie.index");
+        });
     } else {
-        await axios.post("/api/categories", form.value);
+        await axios.post("/api/categories", form.value).then(() => {
+            // redirect to categories list
+            window.location.href = route("categorie.index");
+        });
     }
 };
 </script>
