@@ -16,7 +16,7 @@ return new class extends Migration
 			$table->string('title');
 			$table->string('content');
 			$table->string('url_img');
-			$table->boolean('published');
+			$table->boolean('published')->default(0);
             $table->timestamps();
         });
     }
