@@ -19,7 +19,7 @@ let form = ref({
     id: 0,
     title: "",
     content: "",
-    url_img: "/img/menu/default.png",
+    url_img: "",
     categories: [],
 });
 
@@ -93,8 +93,8 @@ const onSubmit = async () => {
         formData.append(`categories[${index}]`, category.id);
     });
 
-    formData.append("url_img", imageFile.value);
     let response;
+    formData.append("url_img", imageFile.value);
     if (id.value) {
         response = await axios.put(`/api/menus/${id.value}`, formData, {
             headers: {
@@ -108,6 +108,7 @@ const onSubmit = async () => {
             },
         });
     }
+    console.log(response.data);
     window.location = route("menu.index");
 };
 </script>

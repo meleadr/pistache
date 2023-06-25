@@ -92,24 +92,34 @@ class MenuController extends Controller
 	// addMenu
 	public function addMenu(Request $request)
 	{
+		$data = $request->all(); // get all data from the request
+
 		// If there's an image
 		if ($request->hasFile('url_img')) {
 			$file = $request->file('url_img');
 			$extension = $file->getClientOriginalExtension(); // get image extension
-			$filename = $request->id . '.' . $extension; // rename image
+			$filename = time() . '.' . $extension; // rename image
 			$file->move('img/menu/', $filename); // move image to appropriate directory
-			$request->merge(['url_img' => '/img/menu/' . $filename]); // set the url_img attribute
+			$url = '/img/menu/' . $filename;
+			$data['url_img'] = $url; // update the url_img in the data array
+		} else {
+			$data['url_img'] = '/img/menu/default.png'; // set the default url_img
 		}
 
-		$menu = Menu::create($request->all());
+		$menu = Menu::create($data); // create the menu with the updated data
 
-		$categories = $request->categories;
-		foreach ($categories as $category) {
-			$menuHasCategory = new MenuHasCategory();
-			$menuHasCategory->menu_id = $menu->id;
-			$menuHasCategory->category_id = $category['id'];
-			$menuHasCategory->save();
+		// Add Categories to the menu
+		$menuHasCategory = $request->categories;
+
+		if($menuHasCategory) {
+			foreach ($menuHasCategory as $categoryId) {
+				$menuHasCategory = new MenuHasCategory();
+				$menuHasCategory->menu_id = $menu->id;
+				$menuHasCategory->category_id = $categoryId;
+				$menuHasCategory->save();
+			}
 		}
+
 		return response($menu, 201);
 	}
 
@@ -129,13 +139,14 @@ class MenuController extends Controller
 
 			$file = $request->file('url_img');
 			$extension = $file->getClientOriginalExtension(); // get image extension
-			$filename = $request->id . '.' . $extension; // rename image
+			$filename = $menu->id . '.' . $extension; // rename image
 			$path = $file->storeAs('public/img/menu', $filename); // move image to appropriate directory
 			$url = Storage::url($path);
-			$request->merge(['url_img' => $url]); // set the url_img attribute
+			$menu->url_img = $url; // set the url_img attribute directly on the $menu object
+			$menu->save(); // save the menu to store the updated image url
 		}
 
-		$menu->update($request->all());
+		$menu->update($request->except('url_img')); // exclude 'url_img' from the request data, because we've already handled it
 
 		// Delete all categories from the menu
 		$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
@@ -145,11 +156,14 @@ class MenuController extends Controller
 
 		// Add Categories to the menu
 		$menuHasCategory = $request->categories;
-		foreach ($menuHasCategory as $menua) {
-			$menuHasCategory = new MenuHasCategory();
-			$menuHasCategory->menu_id = $menu->id;
-			$menuHasCategory->category_id = $menua['id'];
-			$menuHasCategory->save();
+
+		if($menuHasCategory) {
+			foreach ($menuHasCategory as $categoryId) {
+				$menuHasCategory = new MenuHasCategory();
+				$menuHasCategory->menu_id = $menu->id;
+				$menuHasCategory->category_id = $categoryId;
+				$menuHasCategory->save();
+			}
 		}
 		return response($menu, 200);
 	}
