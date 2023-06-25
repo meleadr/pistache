@@ -19,7 +19,7 @@ let form = ref({
     id: 0,
     title: "",
     content: "",
-    url_img: "",
+    url_img: "/img/menu/default.png",
     categories: [],
 });
 
@@ -78,9 +78,17 @@ const handleCheckboxChange = (categoryId) => {
 
 const onSubmit = async () => {
     if (id.value) {
-        await axios.put(`/api/menus/${id.value}`, form.value);
+        await axios.put(`/api/menus/${id.value}`, form.value).then((data) => {
+            console.log(data);
+            // Redirect to the index page
+            window.location = route("menu.index");
+        });
     } else {
-        await axios.post("/api/menus", form.value);
+        await axios.post("/api/menus", form.value).then((data) => {
+            console.log(data);
+            // Redirect to the index page
+            window.location = route("menu.index");
+        });
     }
 };
 </script>
