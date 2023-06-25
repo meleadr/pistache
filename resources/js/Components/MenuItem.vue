@@ -7,7 +7,7 @@ import Modal from "@/Components/Modal.vue";
 const props = defineProps({
     id: {
         type: Number,
-        required: true,
+        required: false,
     },
     title: {
         type: String,
@@ -67,7 +67,7 @@ const openModal = (action) => {
 </script>
 
 <template>
-    <div class="overflow-hidden rounded-lg bg-white shadow-md" v-if="props.id">
+    <article class="overflow-hidden rounded-lg bg-white shadow-md">
         <img
             v-show="!props.editable"
             :src="props.url_img"
@@ -127,7 +127,7 @@ const openModal = (action) => {
                 </div>
             </div>
         </div>
-    </div>
+    </article>
     <!-- Modal Component -->
     <Modal :show="showingModal" @close="showingModal = false">
         <div class="w-full rounded-lg bg-white p-8 shadow-lg">

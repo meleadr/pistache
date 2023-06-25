@@ -17,9 +17,9 @@ const id = toRef(props, "id"); // Making id reactive
 
 let form = ref({
     id: 0,
-    title: "",
-    content: "",
-    url_img: "",
+    title: "Titre du menu",
+    content: "Contenu du menu",
+    url_img: "/img/menu/default.png",
     categories: [],
 });
 
@@ -123,8 +123,8 @@ const onSubmit = async () => {
             </h2>
         </template>
 
-        <div class="flex flex-col py-12 lg:flex-row">
-            <div class="px-4 sm:mb-10 lg:w-1/2">
+        <section class="flex flex-col py-12 lg:flex-row">
+            <article class="px-4 sm:mb-10 lg:w-1/2">
                 <form
                     @submit.prevent="onSubmit"
                     class="mx-auto max-w-xl space-y-6"
@@ -177,8 +177,8 @@ const onSubmit = async () => {
                         </PrimaryButton>
                     </div>
                 </form>
-            </div>
-            <div class="px-4 lg:w-1/2">
+            </article>
+            <section class="px-4 lg:w-1/2">
                 <MenuItem
                     :id="form.id"
                     :title="form.title"
@@ -186,7 +186,7 @@ const onSubmit = async () => {
                     :url_img="form.url_img"
                     :categories="displayCategories"
                 />
-            </div>
-        </div>
+            </section>
+        </section>
     </AuthenticatedLayout>
 </template>
