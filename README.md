@@ -1,7 +1,7 @@
 # Pistache
 
-Un site/app pour le restaurant "Pistache" qui permet de fournir des informations très rapidement aux clients. Menu, horaires, réservation, ...
-Il contient également un espace admin pour gérer les différents "Menus" (CMS).
+Un site pour le restaurant "Pistache" qui permet de fournir des informations très rapidement aux clients. Menu, horaires, réservation, ...
+Il contient également un espace admin pour gérer les différents "Menus" et "Catégories" (CMS).
 
 Le site a été entierement réalisée avec [Vue3](https://vuejs.org/ "Framework Vue3") et [Laravel](https://laravel.com/ "Framework PHP Laravel").
 
