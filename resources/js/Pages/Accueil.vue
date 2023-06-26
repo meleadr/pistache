@@ -40,7 +40,7 @@ const inspirationImages = ref([
                 <!-- Call to Action button -->
                 <PrimaryButton>
                     <NavLink :href="route('menu')" :isStyled="false">
-                        Découvrez notre menu
+                        Découvrez nos menus
                     </NavLink>
                 </PrimaryButton>
             </article>
