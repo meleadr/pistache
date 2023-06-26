@@ -126,46 +126,48 @@ class MenuController extends Controller
 	// updateMenu
 	public function updateMenu(Request $request, $id)
 	{
+		// Find the menu using id, if not found return a 404 message
 		$menu = Menu::find($id);
 		if(is_null($menu)){
 			return response()->json(['message' => 'Menu Not Found'], 404);
 		}
 
-		// If there's an image
+		// Check if the request contains an image
 		if ($request->hasFile('url_img')) {
 			// Delete the old image
-			$oldImage = str_replace('/storage', '', $menu->url_img);
-			Storage::delete('/public' . $oldImage);
+			$oldImage = str_replace('/img/menu', '', $menu->url_img);
+			if(Storage::exists('img/menu' . $oldImage)) {
+				Storage::delete('img/menu' . $oldImage);
+			}
 
 			$file = $request->file('url_img');
 			$extension = $file->getClientOriginalExtension(); // get image extension
-			$filename = $menu->id . '.' . $extension; // rename image
-			$path = $file->storeAs('public/img/menu', $filename); // move image to appropriate directory
-			$url = Storage::url($path);
+			$filename = time() . '.' . $extension; // rename image
+			$file->move('img/menu/', $filename); // move image to appropriate directory
+			$url = '/img/menu/' . $filename;
 			$menu->url_img = $url; // set the url_img attribute directly on the $menu object
 			$menu->save(); // save the menu to store the updated image url
 		}
 
-		$menu->update($request->except('url_img')); // exclude 'url_img' from the request data, because we've already handled it
+		$menu->update($request->except('url_img', 'categories')); // exclude 'url_img' and 'categories' from the request data, because we've already handled it
 
 		// Delete all categories from the menu
 		$menuHasCategory = MenuHasCategory::where('menu_id', $menu->id)->get();
-		foreach ($menuHasCategory as $menua) {
-			$menua->delete();
+		foreach ($menuHasCategory as $menuCategory) {
+			$menuCategory->delete();
 		}
 
-		// Add Categories to the menu
-		$menuHasCategory = $request->categories;
-
-		if($menuHasCategory) {
-			foreach ($menuHasCategory as $categoryId) {
+		// Add new categories to the menu
+		if($request->has('categories')) {
+			$newCategories = $request->categories;
+			foreach ($newCategories as $categoryId) {
 				$menuHasCategory = new MenuHasCategory();
 				$menuHasCategory->menu_id = $menu->id;
 				$menuHasCategory->category_id = $categoryId;
 				$menuHasCategory->save();
 			}
 		}
-		return response($menu, 200);
+		return response()->json($menu, 200);
 	}
 
 	// deleteMenu

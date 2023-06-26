@@ -57,20 +57,15 @@ let title = ref(
     id.value != null ? "Modifier le menu " + id.value : "Ajouter un menu"
 );
 
-const handleCheckboxChange = (categoryId) => {
+const handleCheckboxChange = (category) => {
     const index = form.value.categories.findIndex(
-        (category) => category.id === categoryId
+        (cat) => cat.id === category.id
     );
 
     if (index > -1) {
         form.value.categories.splice(index, 1);
     } else {
-        const categoryToAdd = categories.value.find(
-            (category) => category.id === categoryId
-        );
-        if (categoryToAdd) {
-            form.value.categories.push(categoryToAdd);
-        }
+        form.value.categories.push(category);
     }
 };
 
@@ -93,10 +88,17 @@ const onSubmit = async () => {
         formData.append(`categories[${index}]`, category.id);
     });
 
+    // Check if it's an update operation and append the _method field
+    if (id.value) {
+        formData.append("_method", "PUT");
+    }
+
     let response;
     formData.append("url_img", imageFile.value);
+
     if (id.value) {
-        response = await axios.put(`/api/menus/${id.value}`, formData, {
+        response = await axios.post(`/api/menus/${id.value}`, formData, {
+            // Changed from put to post
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -109,7 +111,7 @@ const onSubmit = async () => {
         });
     }
     console.log(response.data);
-    window.location = route("menu.index");
+    // window.location = route("menu.index");
 };
 </script>
 
@@ -154,7 +156,7 @@ const onSubmit = async () => {
                                     (c) => c.id === category.id
                                 )
                             "
-                            @change="handleCheckboxChange(category.id)"
+                            @change="handleCheckboxChange(category)"
                             class="mr-2"
                         />
                         <label :for="category.name" class="text-gray-700">
