@@ -110,8 +110,8 @@ const onSubmit = async () => {
             },
         });
     }
-    console.log(response.data);
-    // window.location = route("menu.index");
+    // console.log(response.data);
+    window.location = route("menu.index");
 };
 </script>
 
